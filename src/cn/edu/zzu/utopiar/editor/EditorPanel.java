@@ -2268,6 +2268,9 @@ public class EditorPanel extends JFrame implements ActionListener{
 								utils.get(myFlag).getlChannel().getClock().changeTime(timeMap.get(utils.get(myFlag).getrChannel().getSelect()));
 								utils.get(myFlag).getrChannel().getClock().changeTime(timeMap.get(utils.get(myFlag).getrChannel().getSelect()));
 								b2.setEnabled(false);
+								b0.setEnabled(true);
+								b1.setEnabled(true);
+								b3.setEnabled(true);
 								box.setEnabled(false);
 								jrb1.setEnabled(false);
 								jrb2.setEnabled(false);
@@ -2345,7 +2348,10 @@ public class EditorPanel extends JFrame implements ActionListener{
 												pic1.repaint();
 											}
 											
+											b0.setEnabled(false);
+											b1.setEnabled(false);
 											b2.setEnabled(true);
+											b4.setEnabled(false);
 											box.setEnabled(true);
 											jrb1.setEnabled(true);
 											jrb2.setEnabled(true);
@@ -2362,9 +2368,6 @@ public class EditorPanel extends JFrame implements ActionListener{
 								leds.set(myFlag*2+1, 0);
 								leds.set(myFlag*2, 0);
 								b6.setEnabled(false);
-								b7.setEnabled(true);
-								b4.setEnabled(true);
-								b5.setEnabled(true);
 								box1.setEnabled(false);
 								jrb3.setEnabled(false);
 								jrb4.setEnabled(false);
@@ -2445,11 +2448,11 @@ public class EditorPanel extends JFrame implements ActionListener{
 											EditorPanel.RVO = 0;
 											
 											CommWrite.read(serialPort);
-											CommWrite.write((myFlag*2+2)*16+1, serialPort);
+											CommWrite.write((myFlag*2+1)*16+1, serialPort);
 											long startTime = System.currentTimeMillis();
 											while(System.currentTimeMillis() - startTime <10000){
 												if(EditorPanel.Arrived){
-													if (EditorPanel.RVO != (myFlag*2+2)*16+1) {
+													if (EditorPanel.RVO != (myFlag*2+1)*16+1) {
 														JOptionPane.showMessageDialog(null, "治疗仪未正常结束，请手动终止！", "警告", JOptionPane.WARNING_MESSAGE);
 													}
 													utils.get(myFlag).getrChannel().setImg_flag("07");
@@ -2462,9 +2465,6 @@ public class EditorPanel extends JFrame implements ActionListener{
 													}
 													leds.set(myFlag*2, 1);
 													leds.set(myFlag*2+1, 1);
-													b7.setEnabled(false);
-													b4.setEnabled(false);
-													b5.setEnabled(false);
 													b6.setEnabled(true);
 													jrb3.setEnabled(true);
 													jrb4.setEnabled(true);
@@ -2495,9 +2495,6 @@ public class EditorPanel extends JFrame implements ActionListener{
 												box1.setEnabled(true);
 											}	
 											leds.set(myFlag*2+1, 1);
-											b7.setEnabled(false);
-											b4.setEnabled(false);
-											b5.setEnabled(false);
 											b6.setEnabled(true);
 											jrb3.setEnabled(true);
 											jrb4.setEnabled(true);

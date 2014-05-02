@@ -110,6 +110,12 @@ public class EditorMenuBar extends JMenuBar {
 				EditorPanel.b5.setEnabled(!EditorPanel.utils.get(0).getrChannel().getSwitch_flag());
 				EditorPanel.b6.setEnabled(EditorPanel.utils.get(0).getrChannel().getSwitch_flag());
 				EditorPanel.b7.setEnabled(!EditorPanel.utils.get(0).getrChannel().getSwitch_flag());
+				if(!EditorPanel.utils.get(EditorPanel.flag ).getrChannel().getSwitch_flag()&&EditorPanel.utils.get(EditorPanel.flag).getrChannel().getSelect()>=70){
+					EditorPanel.b4.setEnabled(false);
+					EditorPanel.b5.setEnabled(false);
+					EditorPanel.b6.setEnabled(false);
+					EditorPanel.b7.setEnabled(false);
+				}
 				
 				EditorPanel.box.setEnabled(EditorPanel.utils.get(EditorPanel.flag).getlChannel().getSwitch_flag());
 				EditorPanel.box1.setEnabled(EditorPanel.utils.get(EditorPanel.flag).getrChannel().getSwitch_flag());
@@ -175,6 +181,13 @@ public class EditorMenuBar extends JMenuBar {
 				EditorPanel.b5.setEnabled(!EditorPanel.utils.get(1).getrChannel().getSwitch_flag());
 				EditorPanel.b6.setEnabled(EditorPanel.utils.get(1).getrChannel().getSwitch_flag());
 				EditorPanel.b7.setEnabled(!EditorPanel.utils.get(1).getrChannel().getSwitch_flag());
+				if(!EditorPanel.utils.get(EditorPanel.flag ).getrChannel().getSwitch_flag()&&EditorPanel.utils.get(EditorPanel.flag).getrChannel().getSelect()>=70){
+					System.out.println("ÓÒÍ¨µÀÑ¡Ôñ£º"+EditorPanel.utils.get(EditorPanel.flag).getrChannel().getSelect());
+					EditorPanel.b4.setEnabled(false);
+					EditorPanel.b5.setEnabled(false);
+					EditorPanel.b6.setEnabled(false);
+					EditorPanel.b7.setEnabled(false);
+				}
 				
 				EditorPanel.box.setEnabled(EditorPanel.utils.get(EditorPanel.flag).getlChannel().getSwitch_flag());
 				EditorPanel.box1.setEnabled(EditorPanel.utils.get(EditorPanel.flag).getrChannel().getSwitch_flag());
@@ -240,6 +253,12 @@ public class EditorMenuBar extends JMenuBar {
 				EditorPanel.b5.setEnabled(!EditorPanel.utils.get(2).getrChannel().getSwitch_flag());
 				EditorPanel.b6.setEnabled(EditorPanel.utils.get(2).getrChannel().getSwitch_flag());
 				EditorPanel.b7.setEnabled(!EditorPanel.utils.get(2).getrChannel().getSwitch_flag());
+				if(!EditorPanel.utils.get(EditorPanel.flag ).getrChannel().getSwitch_flag()&&EditorPanel.utils.get(EditorPanel.flag).getrChannel().getSelect()>=70){
+					EditorPanel.b4.setEnabled(false);
+					EditorPanel.b5.setEnabled(false);
+					EditorPanel.b6.setEnabled(false);
+					EditorPanel.b7.setEnabled(false);
+				}
 				
 				EditorPanel.box.setEnabled(EditorPanel.utils.get(EditorPanel.flag).getlChannel().getSwitch_flag());
 				EditorPanel.box1.setEnabled(EditorPanel.utils.get(EditorPanel.flag).getrChannel().getSwitch_flag());
@@ -305,6 +324,12 @@ public class EditorMenuBar extends JMenuBar {
 				EditorPanel.b5.setEnabled(!EditorPanel.utils.get(3).getrChannel().getSwitch_flag());
 				EditorPanel.b6.setEnabled(EditorPanel.utils.get(3).getrChannel().getSwitch_flag());
 				EditorPanel.b7.setEnabled(!EditorPanel.utils.get(3).getrChannel().getSwitch_flag());
+				if(!EditorPanel.utils.get(EditorPanel.flag ).getrChannel().getSwitch_flag()&&EditorPanel.utils.get(EditorPanel.flag).getrChannel().getSelect()>=70){
+					EditorPanel.b4.setEnabled(false);
+					EditorPanel.b5.setEnabled(false);
+					EditorPanel.b6.setEnabled(false);
+					EditorPanel.b7.setEnabled(false);
+				}
 				
 				EditorPanel.box.setEnabled(EditorPanel.utils.get(EditorPanel.flag).getlChannel().getSwitch_flag());
 				EditorPanel.box1.setEnabled(EditorPanel.utils.get(EditorPanel.flag).getrChannel().getSwitch_flag());
