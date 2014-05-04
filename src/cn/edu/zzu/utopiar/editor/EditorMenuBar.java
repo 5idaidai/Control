@@ -152,13 +152,19 @@ public class EditorMenuBar extends JMenuBar {
 				}else if(EditorPanel.utils.get(EditorPanel.flag).getlChannel().getSwitch_flag()){
 					EditorPanel.box.setEnabled(true);
 					EditorPanel.jrb1.setSelected(true);
+				}else{					
+					EditorPanel.jrb1.setSelected(true);
+					EditorPanel.box.setEnabled(false);
 				}
 				if(EditorPanel.utils.get(EditorPanel.flag).getrChannel().isCustom_flag()){
 					EditorPanel.box1.setEnabled(false);
 					EditorPanel.jrb4.setSelected(true);
-				}else if(EditorPanel.utils.get(EditorPanel.flag).getlChannel().getSwitch_flag()){
+				}else if(EditorPanel.utils.get(EditorPanel.flag).getrChannel().getSwitch_flag()){
 					EditorPanel.box1.setEnabled(true);
 					EditorPanel.jrb3.setSelected(true);
+				}else{					
+					EditorPanel.jrb3.setSelected(true);
+					EditorPanel.box1.setEnabled(false);
 				}
 				
 				EditorPanel.p0.setBorder(BorderFactory.createTitledBorder("Í¨µÀ1"));
@@ -221,6 +227,10 @@ public class EditorMenuBar extends JMenuBar {
 				}else if(EditorPanel.utils.get(EditorPanel.flag).getlChannel().getSwitch_flag()){
 					EditorPanel.box.setEnabled(true);
 					EditorPanel.jrb1.setSelected(true);
+				}else{
+					
+					EditorPanel.jrb1.setSelected(true);
+					EditorPanel.box.setEnabled(false);
 				}
 				if(EditorPanel.utils.get(EditorPanel.flag).getrChannel().isCustom_flag()){
 					EditorPanel.box1.setEnabled(false);
@@ -228,6 +238,10 @@ public class EditorMenuBar extends JMenuBar {
 				}else if(EditorPanel.utils.get(EditorPanel.flag).getrChannel().getSwitch_flag()){
 					EditorPanel.box1.setEnabled(true);
 					EditorPanel.jrb3.setSelected(true);
+				}else{
+					
+					EditorPanel.jrb3.setSelected(true);
+					EditorPanel.box1.setEnabled(false);
 				}
 				
 				EditorPanel.box.setSelectedIndex(EditorPanel.utils.get(EditorPanel.flag).getlChannel().getSelect());
@@ -292,6 +306,10 @@ public class EditorMenuBar extends JMenuBar {
 				}else if(EditorPanel.utils.get(EditorPanel.flag).getlChannel().getSwitch_flag()){
 					EditorPanel.box.setEnabled(true);
 					EditorPanel.jrb1.setSelected(true);
+				}else{
+					
+					EditorPanel.jrb1.setSelected(true);
+					EditorPanel.box.setEnabled(false);
 				}
 				if(EditorPanel.utils.get(EditorPanel.flag).getrChannel().isCustom_flag()){
 					EditorPanel.box1.setEnabled(false);
@@ -299,6 +317,10 @@ public class EditorMenuBar extends JMenuBar {
 				}else if(EditorPanel.utils.get(EditorPanel.flag).getrChannel().getSwitch_flag()){
 					EditorPanel.box1.setEnabled(true);
 					EditorPanel.jrb3.setSelected(true);
+				}else{
+					
+					EditorPanel.jrb3.setSelected(true);
+					EditorPanel.box1.setEnabled(false);
 				}
 				
 				EditorPanel.box.setSelectedIndex(EditorPanel.utils.get(EditorPanel.flag).getlChannel().getSelect());
@@ -363,6 +385,9 @@ public class EditorMenuBar extends JMenuBar {
 				}else if(EditorPanel.utils.get(EditorPanel.flag).getlChannel().getSwitch_flag()){
 					EditorPanel.box.setEnabled(true);
 					EditorPanel.jrb1.setSelected(true);
+				}else{
+					EditorPanel.jrb1.setSelected(true);
+					EditorPanel.box.setEnabled(false);					
 				}
 				if(EditorPanel.utils.get(EditorPanel.flag).getrChannel().isCustom_flag()){
 					EditorPanel.box1.setEnabled(false);
@@ -370,6 +395,9 @@ public class EditorMenuBar extends JMenuBar {
 				}else if(EditorPanel.utils.get(EditorPanel.flag).getrChannel().getSwitch_flag()){
 					EditorPanel.box1.setEnabled(true);
 					EditorPanel.jrb3.setSelected(true);
+				}else{
+					EditorPanel.jrb3.setSelected(true);
+					EditorPanel.box1.setEnabled(false);					
 				}
 				
 				EditorPanel.box.setSelectedIndex(EditorPanel.utils.get(EditorPanel.flag).getlChannel().getSelect());

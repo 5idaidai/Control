@@ -715,7 +715,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 			
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				if(((JRadioButton)e.getSource()).isSelected()){
+				if(((JRadioButton)e.getSource()).isSelected()&&utils.get(flag).getlChannel().getSwitch_flag()){
 					System.out.println("专家模式");
 					box.setEnabled(true);
 					
@@ -736,7 +736,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 			
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				if(((JRadioButton)e.getSource()).isSelected()){
+				if(((JRadioButton)e.getSource()).isSelected()&&utils.get(flag).getlChannel().getSwitch_flag()){
 					box.setEnabled(false);
 					utils.get(flag).getlChannel().getWaves().removeAll(utils.get(flag).getlChannel().getWaves());
 					if(!EditorPanel.utils.get(EditorPanel.flag).getlChannel().isCustom_flag())
@@ -750,7 +750,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 			
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				if(((JRadioButton)e.getSource()).isSelected()){
+				if(((JRadioButton)e.getSource()).isSelected()&&utils.get(flag).getrChannel().getSwitch_flag()){
 					box1.setEnabled(true);
 					//初始化为处方一
 					utils.get(flag).getrChannel().getWaves().removeAll(utils.get(flag).getrChannel().getWaves());
@@ -769,7 +769,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 			
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				if(((JRadioButton)e.getSource()).isSelected()){
+				if(((JRadioButton)e.getSource()).isSelected()&&utils.get(flag).getrChannel().getSwitch_flag()){
 					box1.setEnabled(false);
 					utils.get(flag).getrChannel().getWaves().removeAll(utils.get(flag).getrChannel().getWaves());
 					if(!EditorPanel.utils.get(EditorPanel.flag).getrChannel().isCustom_flag())
@@ -1174,6 +1174,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 							b2.setEnabled(false);
 							jrb1.setEnabled(false);
 							jrb2.setEnabled(false);
+							box.setEnabled(false);
 							
 							//左通道更换图片线程
 							mainThread = new Thread(){
@@ -1260,18 +1261,23 @@ public class EditorPanel extends JFrame implements ActionListener{
 													pic1.repaint();
 												}						
 												lStop.put(myFlag, false);
-												if(jrb1.isSelected()){
-													box.setEnabled(true);
-												}						
+																	
 												leds.set(myFlag*2, 1);
-												b0.setEnabled(false);
-												b1.setEnabled(false);
-												b3.setEnabled(false);
-												b2.setEnabled(true);
-												s0.setValue(0);
-												s1.setValue(0);
-												jrb1.setEnabled(true);
-												jrb2.setEnabled(true);
+												
+												if(myFlag == flag){
+													b0.setEnabled(false);
+													b1.setEnabled(false);
+													b3.setEnabled(false);
+													b2.setEnabled(true);
+													s0.setValue(0);
+													s1.setValue(0);
+													jrb1.setEnabled(true);
+													jrb2.setEnabled(true);
+													box.setEnabled(true);													
+												}
+												
+												utils.get(myFlag).getlChannel().setPower(0);
+												utils.get(myFlag).getlChannel().setTemp(0);
 												utils.get(myFlag).getlChannel().setSwitch_flag(true);
 												List<Bottom> bottoms = p12.getBottoms();
 												for (Bottom bottom : bottoms) {
@@ -1287,23 +1293,25 @@ public class EditorPanel extends JFrame implements ActionListener{
 												return;
 											}
 										}
-										utils.get(myFlag).getlChannel().setImg_flag("07");
+										utils.get(myFlag).getlChannel().setImg_flag("07");				
+										lStop.put(myFlag, false);					
+										leds.set(myFlag*2, 1);
+										
 										if(myFlag == flag){
 											pic1.repaint();
-										}						
-										lStop.put(myFlag, false);
-										if(jrb1.isSelected()){
+											b0.setEnabled(false);
+											b1.setEnabled(false);
+											b3.setEnabled(false);
+											b2.setEnabled(true);
+											s0.setValue(0);
+											s1.setValue(0);
+											jrb1.setEnabled(true);
+											jrb2.setEnabled(true);
 											box.setEnabled(true);
-										}						
-										leds.set(myFlag*2, 1);
-										b0.setEnabled(false);
-										b1.setEnabled(false);
-										b3.setEnabled(false);
-										b2.setEnabled(true);
-										s0.setValue(0);
-										s1.setValue(0);
-										jrb1.setEnabled(true);
-										jrb2.setEnabled(true);
+										}
+										
+										utils.get(myFlag).getlChannel().setPower(0);
+										utils.get(myFlag).getlChannel().setTemp(0);
 										utils.get(myFlag).getlChannel().setSwitch_flag(true);
 										List<Bottom> bottoms = p12.getBottoms();
 										for (Bottom bottom : bottoms) {
@@ -1397,7 +1405,6 @@ public class EditorPanel extends JFrame implements ActionListener{
 								
 								rStop.put(myFlag,true);
 								b6.setEnabled(false);
-								box.setEnabled(false);
 								box1.setEnabled(false);
 								jrb3.setEnabled(false);
 								jrb4.setEnabled(false);
@@ -1468,15 +1475,25 @@ public class EditorPanel extends JFrame implements ActionListener{
 											utils.get(myFlag).getrChannel().setImg_flag("07");
 											if(myFlag == flag){
 												pic2.repaint();
+												b6.setEnabled(true);												
+												jrb3.setEnabled(true);
+												jrb4.setEnabled(true);
+												s2.setValue(0);
+												s3.setValue(0);
+												box1.setEnabled(true);
+											}
+												
+											leds.set(myFlag*2+1, 1);
+																						
+											utils.get(myFlag).getrChannel().setSwitch_flag(true);
+											List<Bottom> bottoms = p12.getBottoms();
+											for (Bottom bottom : bottoms) {
+												bottom.repaint();
 											}
 											
-											b6.setEnabled(true);
-											box.setEnabled(true);
-											box1.setEnabled(true);
-											jrb3.setEnabled(true);
-											jrb4.setEnabled(true);
-											s2.setValue(0);
-											s3.setValue(0);
+											
+											utils.get(myFlag).getrChannel().setPower(0);
+											utils.get(myFlag).getrChannel().setTemp(0);
 											rStop.put(myFlag,false);
 										}							
 									}
@@ -1493,6 +1510,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 								b2.setEnabled(false);		
 								jrb1.setEnabled(false);
 								jrb2.setEnabled(false);
+								box.setEnabled(false);
 								
 								//左通道更换图片线程
 								mainThread = new Thread(){
@@ -1576,22 +1594,26 @@ public class EditorPanel extends JFrame implements ActionListener{
 													utils.get(myFlag).getlChannel().setImg_flag("07");
 													if(myFlag == flag){
 														pic1.repaint();
-													}						
-													lStop.put(myFlag, false);
-													if(jrb1.isSelected()){
+														
+														//结束设置增大、减小、结束按钮为不可按
+														b0.setEnabled(false);
+														b1.setEnabled(false);
+														b3.setEnabled(false);
+														b2.setEnabled(true);
+														s0.setValue(0);
+														s1.setValue(0);
+														jrb1.setEnabled(true);
+														jrb2.setEnabled(true);
 														box.setEnabled(true);
-													}						
+													}
+													
+													utils.get(myFlag).getlChannel().setPower(0);
+													utils.get(myFlag).getlChannel().setTemp(0);
+													lStop.put(myFlag, false);
+																			
 													leds.set(myFlag*2, 1);
 													leds.set(myFlag*2+1, 1);
-													//结束设置增大、减小、结束按钮为不可按
-													b0.setEnabled(false);
-													b1.setEnabled(false);
-													b3.setEnabled(false);
-													b2.setEnabled(true);
-													s0.setValue(0);
-													s1.setValue(0);
-													jrb1.setEnabled(true);
-													jrb2.setEnabled(true);
+													
 													utils.get(myFlag).getlChannel().setSwitch_flag(true);
 													List<Bottom> bottoms = p12.getBottoms();
 													for (Bottom bottom : bottoms) {
@@ -1611,20 +1633,23 @@ public class EditorPanel extends JFrame implements ActionListener{
 											utils.get(myFlag).getlChannel().setImg_flag("07");
 											if(myFlag == flag){
 												pic1.repaint();
-											}						
-											lStop.put(myFlag, false);
-											if(jrb1.isSelected()){
+												
+												b0.setEnabled(false);
+												b1.setEnabled(false);
+												b3.setEnabled(false);
+												b2.setEnabled(true);
+												s0.setValue(0);
+												s1.setValue(0);
+												jrb1.setEnabled(true);
+												jrb2.setEnabled(true);
 												box.setEnabled(true);
-											}						
+											}
+											
+											utils.get(myFlag).getlChannel().setTemp(0);
+											utils.get(myFlag).getlChannel().setPower(0);
+											lStop.put(myFlag, false);																	
 											leds.set(myFlag*2, 1);
-											b0.setEnabled(false);
-											b1.setEnabled(false);
-											b3.setEnabled(false);
-											b2.setEnabled(true);
-											s0.setValue(0);
-											s1.setValue(0);
-											jrb1.setEnabled(true);
-											jrb2.setEnabled(true);
+											
 											utils.get(myFlag).getlChannel().setSwitch_flag(true);
 											List<Bottom> bottoms = p12.getBottoms();
 											for (Bottom bottom : bottoms) {
@@ -1700,9 +1725,6 @@ public class EditorPanel extends JFrame implements ActionListener{
 //								}, new Date(end));
 //								utils.get(myFlag).getlChannel().getClock().changeTime("1");
 								
-								box.setEnabled(false);
-								jrb1.setEnabled(false);
-								jrb2.setEnabled(false);
 								
 								lStop.put(myFlag, true);
 								leds.set(myFlag*2, 0);
@@ -1715,7 +1737,10 @@ public class EditorPanel extends JFrame implements ActionListener{
 								b0.setEnabled(true);
 								b1.setEnabled(true);
 								b3.setEnabled(true);
-								b2.setEnabled(false);		
+								b2.setEnabled(false);
+								box.setEnabled(false);
+								jrb1.setEnabled(false);
+								jrb2.setEnabled(false);
 								
 								//左通道更换图片线程
 								mainThread = new Thread(){
@@ -1805,20 +1830,23 @@ public class EditorPanel extends JFrame implements ActionListener{
 													utils.get(myFlag).getlChannel().setImg_flag("07");
 													if(myFlag == flag){
 														pic1.repaint();
-													}						
-													lStop.put(myFlag, false);
-													if(jrb1.isSelected()){
+														
+														b0.setEnabled(false);
+														b1.setEnabled(false);
+														b3.setEnabled(false);
+														b2.setEnabled(true);
+														s0.setValue(0);
+														s1.setValue(0);
+														jrb1.setEnabled(true);
+														jrb2.setEnabled(true);
 														box.setEnabled(true);
-													}						
+													}
+													
+													utils.get(myFlag).getlChannel().setPower(0);
+													utils.get(myFlag).getlChannel().setTemp(0);
+													lStop.put(myFlag, false);																			
 													leds.set(myFlag*2, 1);
-													b0.setEnabled(false);
-													b1.setEnabled(false);
-													b3.setEnabled(false);
-													b2.setEnabled(true);
-													s0.setValue(0);
-													s1.setValue(0);
-													jrb1.setEnabled(true);
-													jrb2.setEnabled(true);
+													
 													utils.get(myFlag).getlChannel().setSwitch_flag(true);
 													List<Bottom> bottoms = p12.getBottoms();
 													for (Bottom bottom : bottoms) {
@@ -1837,20 +1865,23 @@ public class EditorPanel extends JFrame implements ActionListener{
 											utils.get(myFlag).getlChannel().setImg_flag("07");
 											if(myFlag == flag){
 												pic1.repaint();
-											}						
-											lStop.put(myFlag, false);
-											if(jrb1.isSelected()){
+												
+												b0.setEnabled(false);
+												b1.setEnabled(false);
+												b3.setEnabled(false);
+												b2.setEnabled(true);
+												s0.setValue(0);
+												s1.setValue(0);
+												jrb1.setEnabled(true);
+												jrb2.setEnabled(true);
 												box.setEnabled(true);
-											}						
+											}
+											
+											utils.get(myFlag).getlChannel().setPower(0);
+											utils.get(myFlag).getlChannel().setTemp(0);
+											lStop.put(myFlag, false);																	
 											leds.set(myFlag*2, 1);
-											b0.setEnabled(false);
-											b1.setEnabled(false);
-											b3.setEnabled(false);
-											b2.setEnabled(true);
-											s0.setValue(0);
-											s1.setValue(0);
-											jrb1.setEnabled(true);
-											jrb2.setEnabled(true);
+											
 											utils.get(myFlag).getlChannel().setSwitch_flag(true);
 											List<Bottom> bottoms = p12.getBottoms();
 											for (Bottom bottom : bottoms) {
@@ -2135,20 +2166,25 @@ public class EditorPanel extends JFrame implements ActionListener{
 												utils.get(myFlag).getrChannel().setImg_flag("07");
 												if(myFlag == flag){
 													pic2.repaint();
-												}						
-												rStop.put(myFlag,false);
-												if(jrb3.isSelected()){
+													
+													b7.setEnabled(false);
+													b4.setEnabled(false);
+													b5.setEnabled(false);
+													b6.setEnabled(true);
+													jrb3.setEnabled(true);
+													jrb4.setEnabled(true);
+													s2.setValue(0);
+													s3.setValue(0);
 													box1.setEnabled(true);
-												}	
+												}
+												
+												utils.get(myFlag).getrChannel().setPower(0);
+												utils.get(myFlag).getrChannel().setTemp(0);
+												rStop.put(myFlag,false);
+													
 												leds.set(myFlag*2+1, 1);
-												b7.setEnabled(false);
-												b4.setEnabled(false);
-												b5.setEnabled(false);
-												b6.setEnabled(true);
-												jrb3.setEnabled(true);
-												jrb4.setEnabled(true);
-												s2.setValue(0);
-												s3.setValue(0);
+												
+												
 												utils.get(myFlag).getrChannel().setSwitch_flag(true);
 												List<Bottom> bottoms = p12.getBottoms();
 												for (Bottom bottom : bottoms) {
@@ -2166,20 +2202,22 @@ public class EditorPanel extends JFrame implements ActionListener{
 										utils.get(myFlag).getrChannel().setImg_flag("07");
 										if(myFlag == flag){
 											pic2.repaint();
-										}						
-										rStop.put(myFlag,false);
-										if(jrb3.isSelected()){
+											
+											b7.setEnabled(false);
+											b4.setEnabled(false);
+											b5.setEnabled(false);
+											b6.setEnabled(true);
+											jrb3.setEnabled(true);
+											jrb4.setEnabled(true);
+											s2.setValue(0);
+											s3.setValue(0);
 											box1.setEnabled(true);
 										}	
+										utils.get(myFlag).getrChannel().setPower(0);
+										utils.get(myFlag).getrChannel().setTemp(0);
+										rStop.put(myFlag,false);											
 										leds.set(myFlag*2+1, 1);
-										b7.setEnabled(false);
-										b4.setEnabled(false);
-										b5.setEnabled(false);
-										b6.setEnabled(true);
-										jrb3.setEnabled(true);
-										jrb4.setEnabled(true);
-										s2.setValue(0);
-										s3.setValue(0);
+										
 										utils.get(myFlag).getrChannel().setSwitch_flag(true);
 										List<Bottom> bottoms = p12.getBottoms();
 										for (Bottom bottom : bottoms) {
@@ -2346,17 +2384,19 @@ public class EditorPanel extends JFrame implements ActionListener{
 											utils.get(myFlag).getlChannel().setImg_flag("07");
 											if(myFlag == flag){
 												pic1.repaint();
+												
+												b0.setEnabled(false);
+												b1.setEnabled(false);
+												b2.setEnabled(true);
+												b3.setEnabled(false);
+												jrb1.setEnabled(true);
+												jrb2.setEnabled(true);
+												s0.setValue(0);
+												s1.setValue(0);
 											}
 											
-											b0.setEnabled(false);
-											b1.setEnabled(false);
-											b2.setEnabled(true);
-											b4.setEnabled(false);
-											box.setEnabled(true);
-											jrb1.setEnabled(true);
-											jrb2.setEnabled(true);
-											s0.setValue(0);
-											s1.setValue(0);
+											utils.get(myFlag).getlChannel().setPower(0);
+											utils.get(myFlag).getlChannel().setTemp(0);
 											lStop.put(myFlag, false);
 											System.out.println("线程结束");
 										}						
@@ -2458,18 +2498,20 @@ public class EditorPanel extends JFrame implements ActionListener{
 													utils.get(myFlag).getrChannel().setImg_flag("07");
 													if(myFlag == flag){
 														pic2.repaint();
-													}						
+														
+														b6.setEnabled(true);
+														jrb3.setEnabled(true);
+														jrb4.setEnabled(true);
+														s2.setValue(0);
+														s3.setValue(0);
+													}	
+													
+													utils.get(myFlag).getrChannel().setPower(0);
+													utils.get(myFlag).getrChannel().setTemp(0);
 													rStop.put(myFlag,false);
-													if(jrb3.isSelected()){
-														box1.setEnabled(true);
-													}
 													leds.set(myFlag*2, 1);
 													leds.set(myFlag*2+1, 1);
-													b6.setEnabled(true);
-													jrb3.setEnabled(true);
-													jrb4.setEnabled(true);
-													s2.setValue(0);
-													s3.setValue(0);
+													
 													utils.get(myFlag).getlChannel().setSwitch_flag(true);
 													utils.get(myFlag).getrChannel().setSwitch_flag(true);
 													List<Bottom> bottoms = p12.getBottoms();
@@ -2492,14 +2534,17 @@ public class EditorPanel extends JFrame implements ActionListener{
 											}						
 											rStop.put(myFlag,false);
 											if(jrb3.isSelected()){
-												box1.setEnabled(true);
+												b6.setEnabled(true);
+												jrb3.setEnabled(true);
+												jrb4.setEnabled(true);
+												s2.setValue(0);
+												s3.setValue(0);
 											}	
+											
+											utils.get(myFlag).getrChannel().setPower(0);
+											utils.get(myFlag).getrChannel().setTemp(0);
 											leds.set(myFlag*2+1, 1);
-											b6.setEnabled(true);
-											jrb3.setEnabled(true);
-											jrb4.setEnabled(true);
-											s2.setValue(0);
-											s3.setValue(0);
+											
 											utils.get(myFlag).getrChannel().setSwitch_flag(true);
 											List<Bottom> bottoms = p12.getBottoms();
 											for (Bottom bottom : bottoms) {
@@ -2658,20 +2703,22 @@ public class EditorPanel extends JFrame implements ActionListener{
 													utils.get(myFlag).getrChannel().setImg_flag("07");
 													if(myFlag == flag){
 														pic2.repaint();
-													}						
-													rStop.put(myFlag,false);
-													if(jrb3.isSelected()){
+														b7.setEnabled(false);
+														b4.setEnabled(false);
+														b5.setEnabled(false);
+														b6.setEnabled(true);
+														jrb3.setEnabled(true);
+														jrb4.setEnabled(true);
+														s2.setValue(0);
+														s3.setValue(0);
 														box1.setEnabled(true);
 													}	
+													utils.get(myFlag).getrChannel().setPower(0);
+													utils.get(myFlag).getrChannel().setTemp(0);
+													rStop.put(myFlag,false);
+														
 													leds.set(myFlag*2+1, 1);
-													b7.setEnabled(false);
-													b4.setEnabled(false);
-													b5.setEnabled(false);
-													b6.setEnabled(true);
-													jrb3.setEnabled(true);
-													jrb4.setEnabled(true);
-													s2.setValue(0);
-													s3.setValue(0);
+													
 													utils.get(myFlag).getrChannel().setSwitch_flag(true);
 													List<Bottom> bottoms = p12.getBottoms();
 													for (Bottom bottom : bottoms) {
@@ -2688,20 +2735,24 @@ public class EditorPanel extends JFrame implements ActionListener{
 											utils.get(myFlag).getrChannel().setImg_flag("07");
 											if(myFlag == flag){
 												pic2.repaint();
-											}						
-											rStop.put(myFlag,false);
-											if(jrb3.isSelected()){
+												
+												b7.setEnabled(false);
+												b4.setEnabled(false);
+												b5.setEnabled(false);
+												b6.setEnabled(true);
+												jrb3.setEnabled(true);
+												jrb4.setEnabled(true);
+												s2.setValue(0);
+												s3.setValue(0);
 												box1.setEnabled(true);
-											}											
+											}	
+											
+											utils.get(myFlag).getrChannel().setPower(0);
+											utils.get(myFlag).getrChannel().setTemp(0);
+											rStop.put(myFlag,false);
+																					
 											leds.set(myFlag*2+1, 1);
-											b7.setEnabled(false);
-											b4.setEnabled(false);
-											b5.setEnabled(false);
-											b6.setEnabled(true);
-											jrb3.setEnabled(true);
-											jrb4.setEnabled(true);
-											s2.setValue(0);
-											s3.setValue(0);
+											
 											utils.get(myFlag).getrChannel().setSwitch_flag(true);
 											List<Bottom> bottoms = p12.getBottoms();
 											for (Bottom bottom : bottoms) {

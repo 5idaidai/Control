@@ -80,10 +80,10 @@ public class EditorMain extends JFrame implements ActionListener{
 	}
 	
 	public static void main(String[] args){
-		Date date = new Date();
-		if (date.getYear()>114) {
-			return;
-		}
+//		Date date = new Date();
+//		if (date.getYear()>114) {
+//			return;
+//		}
 		try {
 			BeautyEyeLNFHelper.frameBorderStyle = BeautyEyeLNFHelper.FrameBorderStyle.generalNoTranslucencyShadow;
 			org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper.launchBeautyEyeLNF();
