@@ -1491,7 +1491,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 												bottom.repaint();
 											}
 											
-											
+											utils.get(myFlag).getrChannel().getClock().changeLabel(timeMap.get(utils.get(myFlag).getrChannel().getSelect()));
 											utils.get(myFlag).getrChannel().setPower(0);
 											utils.get(myFlag).getrChannel().setTemp(0);
 											rStop.put(myFlag,false);
@@ -1624,8 +1624,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 													EditorPanel.RVO = 0;
 													
 													//设置时间
-													utils.get(myFlag).getlChannel().getClock().changeLabel(timeMap.get(utils.get(myFlag).getlChannel().getSelect()));
-													utils.get(myFlag).getrChannel().getClock().changeLabel(timeMap.get(utils.get(myFlag).getrChannel().getSelect()));
+													utils.get(myFlag).getlChannel().getClock().changeLabel(timeMap.get(utils.get(myFlag).getlChannel().getSelect()));													
 													
 													return;
 												}
@@ -1657,8 +1656,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 											}
 											System.out.println("线程结束");
 											//设置时间
-											utils.get(myFlag).getlChannel().getClock().changeLabel(timeMap.get(utils.get(myFlag).getlChannel().getSelect()));
-											utils.get(myFlag).getrChannel().getClock().changeLabel(timeMap.get(utils.get(myFlag).getrChannel().getSelect()));
+											utils.get(myFlag).getlChannel().getClock().changeLabel(timeMap.get(utils.get(myFlag).getlChannel().getSelect()));											
 											JOptionPane.showMessageDialog(null, "治疗仪未响应，请手动终止！", "警告", JOptionPane.WARNING_MESSAGE);
 											
 										}					
@@ -2397,6 +2395,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 											
 											utils.get(myFlag).getlChannel().setPower(0);
 											utils.get(myFlag).getlChannel().setTemp(0);
+											utils.get(myFlag).getlChannel().getClock().changeLabel(timeMap.get(utils.get(myFlag).getlChannel().getSelect()));
 											lStop.put(myFlag, false);
 											System.out.println("线程结束");
 										}						
@@ -2522,7 +2521,6 @@ public class EditorPanel extends JFrame implements ActionListener{
 													EditorPanel.Arrived = false;
 													EditorPanel.RVO = 0;
 													
-													utils.get(myFlag).getlChannel().getClock().changeLabel(timeMap.get(utils.get(myFlag).getlChannel().getSelect()));
 													utils.get(myFlag).getrChannel().getClock().changeLabel(timeMap.get(utils.get(myFlag).getrChannel().getSelect()));
 													
 													return;
@@ -2549,9 +2547,8 @@ public class EditorPanel extends JFrame implements ActionListener{
 											List<Bottom> bottoms = p12.getBottoms();
 											for (Bottom bottom : bottoms) {
 												bottom.repaint();
-											}
+											}										
 											
-											utils.get(myFlag).getlChannel().getClock().changeLabel(timeMap.get(utils.get(myFlag).getlChannel().getSelect()));
 											utils.get(myFlag).getrChannel().getClock().changeLabel(timeMap.get(utils.get(myFlag).getrChannel().getSelect()));
 											
 											JOptionPane.showMessageDialog(null, "治疗仪未响应，请手动终止！", "警告", JOptionPane.WARNING_MESSAGE);
