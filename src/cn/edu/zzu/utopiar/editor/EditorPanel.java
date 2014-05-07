@@ -225,6 +225,11 @@ public class EditorPanel extends JFrame implements ActionListener{
 	static HashMap<Integer, String>timeMap = new HashMap<Integer, String>();
 	
 	/**
+	 * 是否通道切换
+	 */
+	public static boolean isChange = false;
+	
+	/**
 	 * 底部面板
 	 */
 	public static PanelBottom p12 = null;
@@ -715,7 +720,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 			
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				if(((JRadioButton)e.getSource()).isSelected()&&utils.get(flag).getlChannel().getSwitch_flag()){
+				if(((JRadioButton)e.getSource()).isSelected()&&utils.get(flag).getlChannel().getSwitch_flag()&&!isChange){
 					System.out.println("专家模式");
 					box.setEnabled(true);
 					
@@ -736,11 +741,18 @@ public class EditorPanel extends JFrame implements ActionListener{
 			
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				if(((JRadioButton)e.getSource()).isSelected()&&utils.get(flag).getlChannel().getSwitch_flag()){
+				if(((JRadioButton)e.getSource()).isSelected()&&utils.get(flag).getlChannel().getSwitch_flag()&&!isChange){
+					System.out.println("改变！！！！！！！！！！！！！！！！");
 					box.setEnabled(false);
 					utils.get(flag).getlChannel().getWaves().removeAll(utils.get(flag).getlChannel().getWaves());
 					if(!EditorPanel.utils.get(EditorPanel.flag).getlChannel().isCustom_flag())
 						new PanelChufang(head, waveList,utils.get(flag).getlChannel().getWaves(), 0);
+					if(box.getSelectedIndex()>=70){
+						box.setSelectedIndex(0);
+						utils.get(flag).getlChannel().getClock().changeLabel(timeMap.get(utils.get(flag).getlChannel().getSelect()));
+						box1.setSelectedIndex(0);
+						utils.get(flag).getrChannel().getClock().changeLabel(timeMap.get(utils.get(flag).getrChannel().getSelect()));
+					}
 					EditorPanel.utils.get(flag).getlChannel().setCustom_flag(true);
 				}
 			}
@@ -750,7 +762,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 			
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				if(((JRadioButton)e.getSource()).isSelected()&&utils.get(flag).getrChannel().getSwitch_flag()){
+				if(((JRadioButton)e.getSource()).isSelected()&&utils.get(flag).getrChannel().getSwitch_flag()&&!isChange){
 					box1.setEnabled(true);
 					//初始化为处方一
 					utils.get(flag).getrChannel().getWaves().removeAll(utils.get(flag).getrChannel().getWaves());
@@ -758,7 +770,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 					for (String string : list) {
 						utils.get(flag).getrChannel().getWaves().add(ShowPic.getWave(string));
 					}
-					box1.setSelectedIndex(0);
+//					box1.setSelectedIndex(0);
 					EditorPanel.utils.get(flag).getrChannel().setCustom_flag(false);
 					EditorPanel.utils.get(EditorPanel.flag).getrChannel().getClock().changeLabel(timeMap.get(0));
 				}
@@ -769,11 +781,18 @@ public class EditorPanel extends JFrame implements ActionListener{
 			
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				if(((JRadioButton)e.getSource()).isSelected()&&utils.get(flag).getrChannel().getSwitch_flag()){
+				System.out.println(utils.get(flag).getrChannel().getSwitch_flag());
+				if(((JRadioButton)e.getSource()).isSelected()&&utils.get(flag).getrChannel().getSwitch_flag()&&!isChange){
 					box1.setEnabled(false);
 					utils.get(flag).getrChannel().getWaves().removeAll(utils.get(flag).getrChannel().getWaves());
 					if(!EditorPanel.utils.get(EditorPanel.flag).getrChannel().isCustom_flag())
 						new PanelChufang(head, waveList,utils.get(flag).getrChannel().getWaves(), 1);
+					if(utils.get(flag).getrChannel().getSelect()>=70){
+						box.setSelectedIndex(0);
+						utils.get(flag).getlChannel().getClock().changeLabel(timeMap.get(utils.get(flag).getlChannel().getSelect()));
+						box1.setSelectedIndex(0);
+						utils.get(flag).getrChannel().getClock().changeLabel(timeMap.get(utils.get(flag).getrChannel().getSelect()));
+					}
 					EditorPanel.utils.get(flag).getrChannel().setCustom_flag(true);
 				}
 			}
@@ -846,7 +865,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 	protected void BoxItemStateChanged(ItemEvent e) {	
 		
 		
-		if(e.getStateChange() == ItemEvent.SELECTED){
+		if(e.getStateChange() == ItemEvent.SELECTED&&utils.get(flag).getlChannel().getSwitch_flag()){
 			
 			if(EditorPanel.utils.get(flag).getlChannel().getSelect() == box.getSelectedIndex()){
 				System.out.println("切换通道");
@@ -868,6 +887,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 					return;
 				}
 				System.out.println("干扰电模式");
+				jrb3.setSelected(true);
 				box1.setSelectedIndex(box.getSelectedIndex());
 			}
 			
@@ -890,7 +910,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 	 */
 	protected void Box1ItemStateChanged(ItemEvent e) {
 				
-		if(e.getStateChange() == ItemEvent.SELECTED){
+		if(e.getStateChange() == ItemEvent.SELECTED&&utils.get(flag).getrChannel().getSwitch_flag()){
 			
 			if (EditorPanel.utils.get(flag).getrChannel().getSelect() == box1.getSelectedIndex()) {
 				System.out.println("切换通道");
@@ -910,6 +930,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 					return;
 				}
 				System.out.println("干扰电模式");
+				jrb1.setSelected(true);
 				box.setSelectedIndex(box1.getSelectedIndex());
 			}
 			String chufang1 = (String)box1.getSelectedItem();
@@ -1077,7 +1098,8 @@ public class EditorPanel extends JFrame implements ActionListener{
 						while (System.currentTimeMillis()-startTime<10000) {
 							if(EditorPanel.Arrived) {
 								if(EditorPanel.RVO==send%256){
-									s0.setValue(set);									
+									s0.setValue(set);
+									s2.setValue(set);
 								}
 								else {
 									JOptionPane.showMessageDialog(null, "返回值错误，请重启操作！", "警告", JOptionPane.WARNING_MESSAGE);
@@ -1112,7 +1134,8 @@ public class EditorPanel extends JFrame implements ActionListener{
 						while (System.currentTimeMillis()-startTime<10000) {
 							if(EditorPanel.Arrived) {
 								if(EditorPanel.RVO==send%256){
-									s0.setValue(set);									
+									s0.setValue(set);
+									s2.setValue(set);
 								}
 								else {
 									JOptionPane.showMessageDialog(null, "返回值错误，请重启操作！", "警告", JOptionPane.WARNING_MESSAGE);
@@ -1247,7 +1270,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 										//TODO 结束
 										EditorPanel.Arrived = false;
 										EditorPanel.RVO = 0;
-										
+										timer.cancel();
 										CommWrite.read(serialPort);
 										CommWrite.write((myFlag*2+1)*16+1, serialPort);
 										long startTime = System.currentTimeMillis();
@@ -1272,8 +1295,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 													s0.setValue(0);
 													s1.setValue(0);
 													jrb1.setEnabled(true);
-													jrb2.setEnabled(true);
-													box.setEnabled(true);													
+													jrb2.setEnabled(true);													
 												}
 												
 												utils.get(myFlag).getlChannel().setPower(0);
@@ -1288,7 +1310,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 												EditorPanel.RVO = 0;
 												
 												//设置时间
-												utils.get(flag).getlChannel().getClock().changeLabel(String.valueOf(utils.get(myFlag).getlChannel().getCustom_time()));
+												utils.get(myFlag).getlChannel().getClock().changeLabel(String.valueOf(utils.get(myFlag).getlChannel().getCustom_time()));
 												
 												return;
 											}
@@ -1307,7 +1329,6 @@ public class EditorPanel extends JFrame implements ActionListener{
 											s1.setValue(0);
 											jrb1.setEnabled(true);
 											jrb2.setEnabled(true);
-											box.setEnabled(true);
 										}
 										
 										utils.get(myFlag).getlChannel().setPower(0);
@@ -1490,7 +1511,6 @@ public class EditorPanel extends JFrame implements ActionListener{
 											for (Bottom bottom : bottoms) {
 												bottom.repaint();
 											}
-											
 											utils.get(myFlag).getrChannel().getClock().changeLabel(timeMap.get(utils.get(myFlag).getrChannel().getSelect()));
 											utils.get(myFlag).getrChannel().setPower(0);
 											utils.get(myFlag).getrChannel().setTemp(0);
@@ -1583,6 +1603,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 											//TODO 结束
 											EditorPanel.Arrived = false;
 											EditorPanel.RVO = 0;
+											timer.cancel();
 											CommWrite.read(serialPort);
 											CommWrite.write((myFlag*2+1)*16+1, serialPort);
 											long startTime = System.currentTimeMillis();
@@ -1816,6 +1837,8 @@ public class EditorPanel extends JFrame implements ActionListener{
 											//TODO 结束
 											EditorPanel.Arrived = false;
 											EditorPanel.RVO = 0;
+											
+											timer.cancel();
 											
 											CommWrite.read(serialPort);
 											CommWrite.write((myFlag*2+1)*16+1, serialPort);
@@ -2153,6 +2176,8 @@ public class EditorPanel extends JFrame implements ActionListener{
 										EditorPanel.Arrived = false;
 										EditorPanel.RVO = 0;
 										
+										timer.cancel();
+										
 										CommWrite.read(serialPort);
 										CommWrite.write((myFlag*2+2)*16+1, serialPort);
 										long startTime = System.currentTimeMillis();
@@ -2173,7 +2198,6 @@ public class EditorPanel extends JFrame implements ActionListener{
 													jrb4.setEnabled(true);
 													s2.setValue(0);
 													s3.setValue(0);
-													box1.setEnabled(true);
 												}
 												
 												utils.get(myFlag).getrChannel().setPower(0);
@@ -2209,7 +2233,6 @@ public class EditorPanel extends JFrame implements ActionListener{
 											jrb4.setEnabled(true);
 											s2.setValue(0);
 											s3.setValue(0);
-											box1.setEnabled(true);
 										}	
 										utils.get(myFlag).getrChannel().setPower(0);
 										utils.get(myFlag).getrChannel().setTemp(0);
@@ -2486,6 +2509,8 @@ public class EditorPanel extends JFrame implements ActionListener{
 											EditorPanel.Arrived = false;
 											EditorPanel.RVO = 0;
 											
+											timer.cancel();
+											
 											CommWrite.read(serialPort);
 											CommWrite.write((myFlag*2+1)*16+1, serialPort);
 											long startTime = System.currentTimeMillis();
@@ -2688,6 +2713,8 @@ public class EditorPanel extends JFrame implements ActionListener{
 											//TODO 结束异常怎么办？
 											EditorPanel.Arrived = false;
 											EditorPanel.RVO = 0;
+											
+											timer.cancel();
 											
 											CommWrite.read(serialPort);
 											CommWrite.write((myFlag*2+2)*16+1, serialPort);

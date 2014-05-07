@@ -123,10 +123,7 @@ public class EditorMenuBar extends JMenuBar {
 				EditorPanel.jrb1.setEnabled(EditorPanel.utils.get(EditorPanel.flag).getlChannel().getSwitch_flag());
 				EditorPanel.jrb2.setEnabled(EditorPanel.utils.get(EditorPanel.flag).getlChannel().getSwitch_flag());
 				EditorPanel.jrb3.setEnabled(EditorPanel.utils.get(EditorPanel.flag).getrChannel().getSwitch_flag());
-				EditorPanel.jrb4.setEnabled(EditorPanel.utils.get(EditorPanel.flag).getrChannel().getSwitch_flag());
-				
-				EditorPanel.box.setSelectedIndex(EditorPanel.utils.get(EditorPanel.flag).getlChannel().getSelect());
-				EditorPanel.box1.setSelectedIndex(EditorPanel.utils.get(EditorPanel.flag).getrChannel().getSelect());
+				EditorPanel.jrb4.setEnabled(EditorPanel.utils.get(EditorPanel.flag).getrChannel().getSwitch_flag());				
 				
 				EditorPanel.s0.setValue(EditorPanel.utils.get(EditorPanel.flag).getlChannel().getPower());
 				EditorPanel.s1.setValue(EditorPanel.utils.get(EditorPanel.flag).getlChannel().getTemp());
@@ -146,6 +143,7 @@ public class EditorMenuBar extends JMenuBar {
 				EditorPanel.p11.add(EditorPanel.clock2);
 				EditorPanel.p11.updateUI();
 				
+				EditorPanel.isChange = true;
 				if(EditorPanel.utils.get(EditorPanel.flag).getlChannel().isCustom_flag()){
 					EditorPanel.box.setEnabled(false);
 					EditorPanel.jrb2.setSelected(true);
@@ -166,6 +164,9 @@ public class EditorMenuBar extends JMenuBar {
 					EditorPanel.jrb3.setSelected(true);
 					EditorPanel.box1.setEnabled(false);
 				}
+				EditorPanel.box.setSelectedIndex(EditorPanel.utils.get(EditorPanel.flag).getlChannel().getSelect());
+				EditorPanel.box1.setSelectedIndex(EditorPanel.utils.get(EditorPanel.flag).getrChannel().getSelect());
+				EditorPanel.isChange = false;
 				
 				EditorPanel.p0.setBorder(BorderFactory.createTitledBorder("通道1"));
 				EditorPanel.p13.setBorder(BorderFactory.createTitledBorder("通道2"));
@@ -221,6 +222,7 @@ public class EditorMenuBar extends JMenuBar {
 				EditorPanel.p11.add(EditorPanel.clock2);
 				EditorPanel.p11.updateUI();
 				
+				EditorPanel.isChange = true;
 				if(EditorPanel.utils.get(EditorPanel.flag).getlChannel().isCustom_flag()){
 					EditorPanel.box.setEnabled(false);
 					EditorPanel.jrb2.setSelected(true);
@@ -243,9 +245,9 @@ public class EditorMenuBar extends JMenuBar {
 					EditorPanel.jrb3.setSelected(true);
 					EditorPanel.box1.setEnabled(false);
 				}
-				
 				EditorPanel.box.setSelectedIndex(EditorPanel.utils.get(EditorPanel.flag).getlChannel().getSelect());
 				EditorPanel.box1.setSelectedIndex(EditorPanel.utils.get(EditorPanel.flag).getrChannel().getSelect());
+				EditorPanel.isChange = false;				
 			
 				EditorPanel.p0.setBorder(BorderFactory.createTitledBorder("通道3"));
 				EditorPanel.p13.setBorder(BorderFactory.createTitledBorder("通道4"));
@@ -300,6 +302,7 @@ public class EditorMenuBar extends JMenuBar {
 				EditorPanel.p11.add(EditorPanel.clock2);
 				EditorPanel.p11.updateUI();
 				
+				EditorPanel.isChange = true;
 				if(EditorPanel.utils.get(EditorPanel.flag).getlChannel().isCustom_flag()){
 					EditorPanel.box.setEnabled(false);
 					EditorPanel.jrb2.setSelected(true);
@@ -322,9 +325,9 @@ public class EditorMenuBar extends JMenuBar {
 					EditorPanel.jrb3.setSelected(true);
 					EditorPanel.box1.setEnabled(false);
 				}
-				
 				EditorPanel.box.setSelectedIndex(EditorPanel.utils.get(EditorPanel.flag).getlChannel().getSelect());
 				EditorPanel.box1.setSelectedIndex(EditorPanel.utils.get(EditorPanel.flag).getrChannel().getSelect());
+				EditorPanel.isChange = false;				
 			
 				EditorPanel.p0.setBorder(BorderFactory.createTitledBorder("通道5"));
 				EditorPanel.p13.setBorder(BorderFactory.createTitledBorder("通道6"));
@@ -379,6 +382,7 @@ public class EditorMenuBar extends JMenuBar {
 				EditorPanel.p11.add(EditorPanel.clock2);
 				EditorPanel.p11.updateUI();
 				
+				EditorPanel.isChange = true;
 				if(EditorPanel.utils.get(EditorPanel.flag).getlChannel().isCustom_flag()){
 					EditorPanel.box.setEnabled(false);
 					EditorPanel.jrb2.setSelected(true);
@@ -399,6 +403,7 @@ public class EditorMenuBar extends JMenuBar {
 					EditorPanel.jrb3.setSelected(true);
 					EditorPanel.box1.setEnabled(false);					
 				}
+				EditorPanel.isChange = false;
 				
 				EditorPanel.box.setSelectedIndex(EditorPanel.utils.get(EditorPanel.flag).getlChannel().getSelect());
 				EditorPanel.box1.setSelectedIndex(EditorPanel.utils.get(EditorPanel.flag).getrChannel().getSelect());
