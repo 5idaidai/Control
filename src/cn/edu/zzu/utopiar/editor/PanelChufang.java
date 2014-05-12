@@ -376,7 +376,7 @@ public class PanelChufang extends JFrame implements ActionListener{
 					id--;
 					ids.add(id);
 					System.out.println("ID:"+id);
-					indexs.add(comboBoxs[i].getSelectedIndex());
+					indexs.add(comboBoxs[id].getSelectedIndex());
 				}
 			}
 			
@@ -445,7 +445,6 @@ public class PanelChufang extends JFrame implements ActionListener{
 				waveList.add(waves.get(i));
 				wavePics.add(wavePicList.get(i));
 			}
-			System.out.println(wavePics.get(0).getName(0));
 			int sizeOfByte = 4+time*6;
 			head[1] = sizeOfByte;
 			head[3] = plBox.getSelectedIndex()+2;

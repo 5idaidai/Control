@@ -306,15 +306,17 @@ public class PanelCase extends JFrame implements ActionListener{
 			new PrintPanel(pa);
 		}else if(e.getSource()==b3){
 			System.out.println("¿ªÊ¼ÖÎÁÆ");
-			setVisible(false);
+			
 			if(owner!=null){
 				owner.setVisible(true);
 				owner.editorMain.setVisible(false);
-			}				
+			}
+			setVisible(false);
 		}else if(e.getSource()==b4){
-			this.setVisible(false);
-			this.owner.editorMain.setVisible(true);
+			this.setVisible(false);			
 			owner.setVisible(false);
+			this.owner.editorMain.setVisible(true);
+			
 		}
 	}
 }

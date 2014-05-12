@@ -88,7 +88,8 @@ public class EditorMain extends JFrame implements ActionListener{
 			BeautyEyeLNFHelper.frameBorderStyle = BeautyEyeLNFHelper.FrameBorderStyle.generalNoTranslucencyShadow;
 			org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper.launchBeautyEyeLNF();
 	        UIManager.put("RootPane.setupButtonVisible", false);
-	        
+	        //设置此开关量为false即表示关闭之，BeautyEye LNF中默认是true 
+	        BeautyEyeLNFHelper.translucencyAtFrameInactive = false;
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

@@ -456,6 +456,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 		s1.setPaintLabels(false);
 		s1.setSnapToTicks(false);
 		s1.setValue(0);
+		s1.setEnabled(false);
 		l2.setBounds(30, 30, 200, 40);
 		s1.setBounds(30, 85, 160, 40);
 		b8.setBounds(30,160,140,50);
@@ -591,6 +592,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 		s3.setPaintLabels(false);
 		s3.setSnapToTicks(true);
 		s3.setValue(0);
+		s3.setEnabled(false);
 		l6.setBounds(30, 30, 200, 40);
 		s3.setBounds(30, 85, 160, 40);
 		p10.setBounds(380,330,350,250);
@@ -649,28 +651,28 @@ public class EditorPanel extends JFrame implements ActionListener{
 			}
 		});
 		
-		s1.addMouseListener(new MouseAdapter() {
-		
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				EditorPanel.Arrived = false;
-				EditorPanel.RVO = 0;
-				int now = s1.getValue();
-				int[] send = new int[5];
-				send[0] = 170;
-				int sum=170;
-				send[1] = (flag*2+1)*16+2;
-				sum += (flag*2+1)*16+2;
-				send[2] = now;
-				sum += now;
-				send[3] = 1;
-				sum += 1;
-				send[4] = sum;
-				CommWrite.write(send, serialPort);
-				
-				System.out.println("左通道温度："+s1.getValue());
-			}
-		});
+//		s1.addMouseListener(new MouseAdapter() {
+//		
+//			@Override
+//			public void mouseReleased(MouseEvent e) {
+//				EditorPanel.Arrived = false;
+//				EditorPanel.RVO = 0;
+//				int now = s1.getValue();
+//				int[] send = new int[5];
+//				send[0] = 170;
+//				int sum=170;
+//				send[1] = (flag*2+1)*16+2;
+//				sum += (flag*2+1)*16+2;
+//				send[2] = now;
+//				sum += now;
+//				send[3] = 1;
+//				sum += 1;
+//				send[4] = sum;
+//				CommWrite.write(send, serialPort);
+//				
+//				System.out.println("左通道温度："+s1.getValue());
+//			}
+//		});
 		
 		s2.addChangeListener(new ChangeListener() {
 			
@@ -688,26 +690,26 @@ public class EditorPanel extends JFrame implements ActionListener{
 			}
 		});
 		
-		s3.addMouseListener(new MouseAdapter() {
-			public void mouseReleased(MouseEvent e) {
-				EditorPanel.Arrived = false;
-				EditorPanel.RVO = 0;
-				int now = s3.getValue();
-				int[] send = new int[5];
-				send[0] = 170;
-				int sum=170;
-				send[1] = (flag*2+1)*16+2;
-				sum += (flag*2+1)*16+2;
-				send[2] = now;
-				sum += now;
-				send[3] = 1;
-				sum += 1;
-				send[4] = sum;
-				CommWrite.write(send, serialPort);
-				
-				System.out.println("右通道温度："+s3.getValue());
-			}
-		});
+//		s3.addMouseListener(new MouseAdapter() {
+//			public void mouseReleased(MouseEvent e) {
+//				EditorPanel.Arrived = false;
+//				EditorPanel.RVO = 0;
+//				int now = s3.getValue();
+//				int[] send = new int[5];
+//				send[0] = 170;
+//				int sum=170;
+//				send[1] = (flag*2+1)*16+2;
+//				sum += (flag*2+1)*16+2;
+//				send[2] = now;
+//				sum += now;
+//				send[3] = 1;
+//				sum += 1;
+//				send[4] = sum;
+//				CommWrite.write(send, serialPort);
+//				
+//				System.out.println("右通道温度："+s3.getValue());
+//			}
+//		});
 		
 		box.addItemListener(new ItemListener() {			
 			@Override
@@ -875,6 +877,14 @@ public class EditorPanel extends JFrame implements ActionListener{
 			if(EditorPanel.utils.get(flag).getlChannel().getSelect()>=70){
 				utils.get(flag).getrChannel().setSelect(0);
 				box1.setSelectedIndex(0);
+				//初始化为处方一
+				List<String>list = ShowPic.readTxtFile("chufang/处方1.txt");
+				utils.get(flag).getrChannel().getWaves().removeAll(utils.get(flag).getrChannel().getWaves());
+				for (String string : list) {
+					utils.get(flag).getrChannel().getWaves().add(ShowPic.getWave(string));
+				}
+				//设置时间
+				utils.get(flag).getrChannel().getClock().changeLabel(timeMap.get(utils.get(flag).getrChannel().getSelect()));
 			}
 			
 			String chufang = (String) box.getSelectedItem();
@@ -920,6 +930,14 @@ public class EditorPanel extends JFrame implements ActionListener{
 			if(EditorPanel.utils.get(flag).getrChannel().getSelect()>=70){
 				utils.get(flag).getlChannel().setSelect(0);
 				box.setSelectedIndex(0);
+				//初始化处方
+				List<String> list = ShowPic.readTxtFile("chufang/处方1.txt");			
+				utils.get(flag).getlChannel().getWaves().removeAll(utils.get(flag).getlChannel().getWaves());
+				for (String string : list) {
+					utils.get(flag).getlChannel().getWaves().add(ShowPic.getWave(string));						
+				}
+				//设置时间
+				utils.get(flag).getlChannel().getClock().changeLabel(timeMap.get(utils.get(flag).getlChannel().getSelect()));
 			}
 			
 			if(box1.getSelectedIndex()>=70){
@@ -1099,7 +1117,8 @@ public class EditorPanel extends JFrame implements ActionListener{
 							if(EditorPanel.Arrived) {
 								if(EditorPanel.RVO==send%256){
 									s0.setValue(set);
-									s2.setValue(set);
+									if(box.getSelectedIndex()>=70)
+										s2.setValue(set);
 								}
 								else {
 									JOptionPane.showMessageDialog(null, "返回值错误，请重启操作！", "警告", JOptionPane.WARNING_MESSAGE);
@@ -1135,7 +1154,8 @@ public class EditorPanel extends JFrame implements ActionListener{
 							if(EditorPanel.Arrived) {
 								if(EditorPanel.RVO==send%256){
 									s0.setValue(set);
-									s2.setValue(set);
+									if(box.getSelectedIndex()>=70)
+										s2.setValue(set);
 								}
 								else {
 									JOptionPane.showMessageDialog(null, "返回值错误，请重启操作！", "警告", JOptionPane.WARNING_MESSAGE);
@@ -1229,7 +1249,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 											}else if (wave.getTime(i)==49) {
 												long startMili=System.currentTimeMillis();
 												long nowMili=System.currentTimeMillis();
-												while(nowMili-startMili<=(wave.getTime(3)*1000)){
+												while(nowMili-startMili<(wave.getTime(3)*1000)){
 													utils.get(myFlag).getlChannel().setImg_flag(wave.getName(i%2));
 													if(myFlag == flag){
 														pic1.repaint();
@@ -1246,9 +1266,10 @@ public class EditorPanel extends JFrame implements ActionListener{
 													i++;
 												}
 											}else {
+												System.out.println("执行！！！！！！！！！！");
 												long startMili=System.currentTimeMillis();
 												long nowMili=System.currentTimeMillis();
-												while(nowMili-startMili<=(wave.getTime(3)*1000)){
+												while(nowMili-startMili<(wave.getTime(3)*1000)){
 													utils.get(myFlag).getlChannel().setImg_flag(wave.getName(i%2));
 													if(myFlag == flag){
 														pic1.repaint();
@@ -1458,7 +1479,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 												}else if (wave.getTime(i)==49) {
 													long startMili=System.currentTimeMillis();
 													long nowMili=System.currentTimeMillis();
-													while(nowMili-startMili<=(wave.getTime(3)*1000)){
+													while(nowMili-startMili<(wave.getTime(3)*1000)){
 														utils.get(myFlag).getrChannel().setImg_flag(wave.getName(i%2));
 														if(myFlag == flag){
 															pic2.repaint();
@@ -1477,7 +1498,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 												}else {
 													long startMili=System.currentTimeMillis();
 													long nowMili=System.currentTimeMillis();
-													while(nowMili-startMili<=(wave.getTime(3)*1000)){
+													while(nowMili-startMili<(wave.getTime(3)*1000)){
 														utils.get(myFlag).getrChannel().setImg_flag(wave.getName(i%2));
 														if(myFlag == flag){
 															pic2.repaint();
@@ -1562,7 +1583,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 												}else if (wave.getTime(i)==49) {
 													long startMili=System.currentTimeMillis();
 													long nowMili=System.currentTimeMillis();
-													while(nowMili-startMili<=(wave.getTime(3)*1000)){
+													while(nowMili-startMili<(wave.getTime(3)*1000)){
 														utils.get(myFlag).getlChannel().setImg_flag(wave.getName(i%2));
 														if(myFlag == flag){
 															pic1.repaint();
@@ -1581,7 +1602,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 												}else {
 													long startMili=System.currentTimeMillis();
 													long nowMili=System.currentTimeMillis();
-													while(nowMili-startMili<=(wave.getTime(3)*1000)){
+													while(nowMili-startMili<(wave.getTime(3)*1000)){
 														utils.get(myFlag).getlChannel().setImg_flag(wave.getName(i%2));
 														if(myFlag == flag){
 															pic1.repaint();
@@ -1792,7 +1813,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 												}else if (wave.getTime(i)==49) {
 													long startMili=System.currentTimeMillis();
 													long nowMili=System.currentTimeMillis();
-													while(nowMili-startMili<=(wave.getTime(3)*1000)){
+													while(nowMili-startMili<(wave.getTime(3)*1000)){
 														utils.get(myFlag).getlChannel().setImg_flag(wave.getName(i%2));
 														if(myFlag == flag){
 															pic1.repaint();
@@ -1812,7 +1833,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 												}else {
 													long startMili=System.currentTimeMillis();
 													long nowMili=System.currentTimeMillis();
-													while(nowMili-startMili<=(wave.getTime(3)*1000)){
+													while(nowMili-startMili<(wave.getTime(3)*1000)){
 														utils.get(myFlag).getlChannel().setImg_flag(wave.getName(i%2));
 														if(myFlag == flag){
 															pic1.repaint();
@@ -2135,7 +2156,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 											}else if (wave.getTime(i)==49) {
 												long startMili=System.currentTimeMillis();
 												long nowMili=System.currentTimeMillis();
-												while(nowMili-startMili<=(wave.getTime(3)*1000)){
+												while(nowMili-startMili<(wave.getTime(3)*1000)){
 													utils.get(myFlag).getrChannel().setImg_flag(wave.getName(i%2));
 													if(myFlag == flag){
 														
@@ -2155,7 +2176,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 											}else {
 												long startMili=System.currentTimeMillis();
 												long nowMili=System.currentTimeMillis();
-												while(nowMili-startMili<=(wave.getTime(3)*1000)){
+												while(nowMili-startMili<(wave.getTime(3)*1000)){
 													utils.get(myFlag).getrChannel().setImg_flag(wave.getName(i%2));
 													if(myFlag == flag){
 														pic2.repaint();
@@ -2259,8 +2280,8 @@ public class EditorPanel extends JFrame implements ActionListener{
 							int[] send = new int[5];
 							send[0] = 170;
 							int sum=170;
-							send[1] = (flag*2+1)*16+2;
-							sum += (flag*2+1)*16+2;
+							send[1] = (flag*2+2)*16+2;
+							sum += (flag*2+2)*16+2;
 							send[2] = now;
 							sum += now;
 							send[3] = 1;
@@ -2365,7 +2386,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 												}else if (wave.getTime(i)==49) {
 													long startMili=System.currentTimeMillis();
 													long nowMili=System.currentTimeMillis();
-													while(nowMili-startMili<=(wave.getTime(3)*1000)){
+													while(nowMili-startMili<(wave.getTime(3)*1000)){
 														utils.get(myFlag).getlChannel().setImg_flag(wave.getName(i%2));
 														if(myFlag == flag){
 															pic1.repaint();
@@ -2384,7 +2405,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 												}else {
 													long startMili=System.currentTimeMillis();
 													long nowMili=System.currentTimeMillis();
-													while(nowMili-startMili<=(wave.getTime(3)*1000)){
+													while(nowMili-startMili<(wave.getTime(3)*1000)){
 														utils.get(myFlag).getlChannel().setImg_flag(wave.getName(i%2));
 														if(myFlag == flag){
 															pic1.repaint();
@@ -2414,6 +2435,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 												jrb2.setEnabled(true);
 												s0.setValue(0);
 												s1.setValue(0);
+												box.setEnabled(true);
 											}
 											
 											utils.get(myFlag).getlChannel().setPower(0);
@@ -2468,7 +2490,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 												}else if (wave.getTime(i)==49) {
 													long startMili=System.currentTimeMillis();
 													long nowMili=System.currentTimeMillis();
-													while(nowMili-startMili<=(wave.getTime(3)*1000)){
+													while(nowMili-startMili<(wave.getTime(3)*1000)){
 														utils.get(myFlag).getrChannel().setImg_flag(wave.getName(i%2));
 														if(myFlag == flag){
 															
@@ -2488,7 +2510,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 												}else {
 													long startMili=System.currentTimeMillis();
 													long nowMili=System.currentTimeMillis();
-													while(nowMili-startMili<=(wave.getTime(3)*1000)){
+													while(nowMili-startMili<(wave.getTime(3)*1000)){
 														utils.get(myFlag).getrChannel().setImg_flag(wave.getName(i%2));
 														if(myFlag == flag){
 															pic2.repaint();
@@ -2528,6 +2550,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 														jrb4.setEnabled(true);
 														s2.setValue(0);
 														s3.setValue(0);
+														box1.setEnabled(true);
 													}	
 													
 													utils.get(myFlag).getrChannel().setPower(0);
@@ -2554,18 +2577,19 @@ public class EditorPanel extends JFrame implements ActionListener{
 											utils.get(myFlag).getrChannel().setImg_flag("07");
 											if(myFlag == flag){
 												pic2.repaint();
-											}						
-											rStop.put(myFlag,false);
-											if(jrb3.isSelected()){
+												
 												b6.setEnabled(true);
 												jrb3.setEnabled(true);
 												jrb4.setEnabled(true);
 												s2.setValue(0);
 												s3.setValue(0);
-											}	
+												box1.setEnabled(true);
+											}						
+											rStop.put(myFlag,false);	
 											
 											utils.get(myFlag).getrChannel().setPower(0);
 											utils.get(myFlag).getrChannel().setTemp(0);
+											leds.set(myFlag*2, 1);
 											leds.set(myFlag*2+1, 1);
 											
 											utils.get(myFlag).getrChannel().setSwitch_flag(true);
@@ -2673,7 +2697,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 												}else if (wave.getTime(i)==49) {
 													long startMili=System.currentTimeMillis();
 													long nowMili=System.currentTimeMillis();
-													while(nowMili-startMili<=(wave.getTime(3)*1000)){
+													while(nowMili-startMili<(wave.getTime(3)*1000)){
 														utils.get(myFlag).getrChannel().setImg_flag(wave.getName(i%2));
 														if(myFlag == flag){
 															
@@ -2693,7 +2717,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 												}else {
 													long startMili=System.currentTimeMillis();
 													long nowMili=System.currentTimeMillis();
-													while(nowMili-startMili<=(wave.getTime(3)*1000)){
+													while(nowMili-startMili<(wave.getTime(3)*1000)){
 														utils.get(myFlag).getrChannel().setImg_flag(wave.getName(i%2));
 														if(myFlag == flag){
 															pic2.repaint();
