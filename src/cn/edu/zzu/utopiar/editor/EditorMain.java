@@ -4,12 +4,16 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
+import javax.swing.WindowConstants;
 
 import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
 
@@ -74,9 +78,26 @@ public class EditorMain extends JFrame implements ActionListener{
 //		this.setUndecorated(true);
 //		this.getRootPane().setWindowDecorationStyle(JRootPane.NONE);
 		
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setBounds(0, 0, 1600, 900);
 		this.setVisible(true);
+		this.addWindowListener(new WindowAdapter() {		
+			public void windowClosing(WindowEvent e){
+				for(int i=0; i<4; i++){
+					if (!EditorPanel.utils.get(i).getlChannel().getSwitch_flag()||!EditorPanel.utils.get(i).getrChannel().getSwitch_flag()) {
+						JOptionPane.showMessageDialog(null, "请关闭所有通道再退出程序！", "警告", JOptionPane.WARNING_MESSAGE);
+						setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+						return;
+					}
+					if (EditorPanel.utils.get(i).getlChannel().getTemp()!=0||EditorPanel.utils.get(i).getrChannel().getTemp()!=0) {
+						JOptionPane.showMessageDialog(null, "请将所有通道透热强度调整为零！", "警告", JOptionPane.WARNING_MESSAGE);
+						setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+						return;
+					}
+				}
+				setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			}		
+		});
 	}
 	
 	public static void main(String[] args){

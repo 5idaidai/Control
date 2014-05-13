@@ -1492,7 +1492,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 							if(EditorPanel.RVO == sum%256){
 								try {
 									//≤•∑≈…˘“Ù
-									FileInputStream fis = new FileInputStream("music/b"+(2*myFlag+1)+".au");
+									FileInputStream fis = new FileInputStream("music/bd"+(myFlag+1)+".au");
 									AudioStream stream = new AudioStream(fis);
 									AudioPlayer.player.start(stream);
 								} catch (Exception e1) {
@@ -1742,7 +1742,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 													utils.get(myFlag).getlChannel().getClock().changeLabel(timeMap.get(utils.get(myFlag).getlChannel().getSelect()));													
 													try {
 														//≤•∑≈…˘“Ù
-														FileInputStream fis = new FileInputStream("music/s"+(2*myFlag+1)+".au");
+														FileInputStream fis = new FileInputStream("music/sd"+(myFlag+1)+".au");
 														AudioStream stream = new AudioStream(fis);
 														AudioPlayer.player.start(stream);
 													} catch (Exception e1) {
@@ -1783,7 +1783,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 											utils.get(myFlag).getlChannel().getClock().changeLabel(timeMap.get(utils.get(myFlag).getlChannel().getSelect()));											
 											try {
 												//≤•∑≈…˘“Ù
-												FileInputStream fis = new FileInputStream("music/s"+(2*myFlag+1)+".au");
+												FileInputStream fis = new FileInputStream("music/sd"+(myFlag+1)+".au");
 												AudioStream stream = new AudioStream(fis);
 												AudioPlayer.player.start(stream);
 											} catch (Exception e1) {
@@ -2489,7 +2489,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 							if (EditorPanel.RVO == sum%256) {
 								try {
 									//≤•∑≈…˘“Ù
-									FileInputStream fis = new FileInputStream("music/b"+(2*myFlag+2)+".au");
+									FileInputStream fis = new FileInputStream("music/bd"+(myFlag+1)+".au");
 									AudioStream stream = new AudioStream(fis);
 									AudioPlayer.player.start(stream);
 								} catch (Exception e1) {
@@ -2732,7 +2732,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 													utils.get(myFlag).getrChannel().getClock().changeLabel(timeMap.get(utils.get(myFlag).getrChannel().getSelect()));
 													try {
 														//≤•∑≈…˘“Ù
-														FileInputStream fis = new FileInputStream("music/s"+(2*myFlag+2)+".au");
+														FileInputStream fis = new FileInputStream("music/sd"+(myFlag+1)+".au");
 														AudioStream stream = new AudioStream(fis);
 														AudioPlayer.player.start(stream);
 													} catch (Exception e1) {
@@ -2770,7 +2770,7 @@ public class EditorPanel extends JFrame implements ActionListener{
 											utils.get(myFlag).getrChannel().getClock().changeLabel(timeMap.get(utils.get(myFlag).getrChannel().getSelect()));
 											try {
 												//≤•∑≈…˘“Ù
-												FileInputStream fis = new FileInputStream("music/s"+(2*myFlag+2)+".au");
+												FileInputStream fis = new FileInputStream("music/sd"+(myFlag+1)+".au");
 												AudioStream stream = new AudioStream(fis);
 												AudioPlayer.player.start(stream);
 											} catch (Exception e1) {
