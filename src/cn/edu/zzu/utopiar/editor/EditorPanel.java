@@ -15,6 +15,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
@@ -42,6 +45,11 @@ import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.FontUIResource;
+
+import sun.audio.AudioData;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
+import sun.audio.*;
 
 import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
 import org.jb2011.lnf.beautyeye.widget.N9ComponentFactory;
@@ -234,6 +242,16 @@ public class EditorPanel extends JFrame implements ActionListener{
 	 */
 	public static PanelBottom p12 = null;
 	
+	/**
+	 * 开始/结束提示语
+	 */
+	static AudioStream[] begin1Stream = new AudioStream[4];
+	static AudioStream[] stop1Stream = new AudioStream[4];
+	
+	static AudioStream[] begin2Stream = new AudioStream[4];
+	static AudioStream[] stop2Stream = new AudioStream[4];
+	
+	
 	Thread mainThread = null;
 	
 	Thread mainThread2 = null;
@@ -254,6 +272,24 @@ public class EditorPanel extends JFrame implements ActionListener{
 			for (String string : list) {
 				utils.get(i).getlChannel().getWaves().add(ShowPic.getWave(string));
 				utils.get(i).getrChannel().getWaves().add(ShowPic.getWave(string));
+			}
+		}
+		
+		//加载声音文件
+		for(int i=0; i<4; i++){
+			try {
+				FileInputStream fib = new FileInputStream("music/b"+(2*i+1)+".au");
+				FileInputStream fis = new FileInputStream("music/s"+(2*i+1)+".au");
+				begin1Stream[i] = new AudioStream(fib);
+				stop1Stream[i] = new AudioStream(fis);
+				
+				FileInputStream fib1 = new FileInputStream("music/b"+(2*i+2)+".au");
+				FileInputStream fis1 = new FileInputStream("music/s"+(2*i+2)+".au");
+				begin2Stream[i] = new AudioStream(fib1);
+				stop2Stream[i] = new AudioStream(fis1);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 	}
@@ -1195,6 +1231,16 @@ public class EditorPanel extends JFrame implements ActionListener{
 				while(System.currentTimeMillis() - startTime <10000){
 					if(EditorPanel.Arrived){
 						if (EditorPanel.RVO == head[1]%256) {
+							try {
+								//播放声音
+								FileInputStream fis = new FileInputStream("music/b"+(2*myFlag+1)+".au");
+								AudioStream stream = new AudioStream(fis);
+								AudioPlayer.player.start(stream);
+							} catch (Exception e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							
 							final Timer timer = new Timer();
 							final long end = System.currentTimeMillis() + utils.get(myFlag).getlChannel().getCustom_time() * 60 * 1000;
 							timer.schedule(new TimerTask() {
@@ -1332,7 +1378,15 @@ public class EditorPanel extends JFrame implements ActionListener{
 												
 												//设置时间
 												utils.get(myFlag).getlChannel().getClock().changeLabel(String.valueOf(utils.get(myFlag).getlChannel().getCustom_time()));
-												
+												try {
+													//播放声音
+													FileInputStream fis = new FileInputStream("music/s"+(2*myFlag+1)+".au");
+													AudioStream stream = new AudioStream(fis);
+													AudioPlayer.player.start(stream);
+												} catch (Exception e1) {
+													// TODO Auto-generated catch block
+													e1.printStackTrace();
+												}
 												return;
 											}
 										}
@@ -1362,6 +1416,15 @@ public class EditorPanel extends JFrame implements ActionListener{
 										System.out.println("线程结束");
 										//设置时间
 										utils.get(flag).getlChannel().getClock().changeLabel(String.valueOf(utils.get(myFlag).getlChannel().getCustom_time()));
+										try {
+											//播放声音
+											FileInputStream fis = new FileInputStream("music/s"+(2*myFlag+1)+".au");
+											AudioStream stream = new AudioStream(fis);
+											AudioPlayer.player.start(stream);
+										} catch (Exception e1) {
+											// TODO Auto-generated catch block
+											e1.printStackTrace();
+										}
 										JOptionPane.showMessageDialog(null, "治疗仪未响应，请手动终止！", "警告", JOptionPane.WARNING_MESSAGE);
 										
 									}					
@@ -1427,6 +1490,16 @@ public class EditorPanel extends JFrame implements ActionListener{
 					while (System.currentTimeMillis() - startTime <10000) {
 						if(EditorPanel.Arrived){
 							if(EditorPanel.RVO == sum%256){
+								try {
+									//播放声音
+									FileInputStream fis = new FileInputStream("music/b"+(2*myFlag+1)+".au");
+									AudioStream stream = new AudioStream(fis);
+									AudioPlayer.player.start(stream);
+								} catch (Exception e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+								
 								final Timer timer = new Timer();
 								final long end = System.currentTimeMillis() + Integer.parseInt(timeMap.get(utils.get(myFlag).getlChannel().getSelect())) * 60 * 1000;
 								timer.schedule(new TimerTask() {
@@ -1667,6 +1740,15 @@ public class EditorPanel extends JFrame implements ActionListener{
 													
 													//设置时间
 													utils.get(myFlag).getlChannel().getClock().changeLabel(timeMap.get(utils.get(myFlag).getlChannel().getSelect()));													
+													try {
+														//播放声音
+														FileInputStream fis = new FileInputStream("music/s"+(2*myFlag+1)+".au");
+														AudioStream stream = new AudioStream(fis);
+														AudioPlayer.player.start(stream);
+													} catch (Exception e1) {
+														// TODO Auto-generated catch block
+														e1.printStackTrace();
+													}
 													
 													return;
 												}
@@ -1699,6 +1781,16 @@ public class EditorPanel extends JFrame implements ActionListener{
 											System.out.println("线程结束");
 											//设置时间
 											utils.get(myFlag).getlChannel().getClock().changeLabel(timeMap.get(utils.get(myFlag).getlChannel().getSelect()));											
+											try {
+												//播放声音
+												FileInputStream fis = new FileInputStream("music/s"+(2*myFlag+1)+".au");
+												AudioStream stream = new AudioStream(fis);
+												AudioPlayer.player.start(stream);
+											} catch (Exception e1) {
+												// TODO Auto-generated catch block
+												e1.printStackTrace();
+											}
+											
 											JOptionPane.showMessageDialog(null, "治疗仪未响应，请手动终止！", "警告", JOptionPane.WARNING_MESSAGE);
 											
 										}					
@@ -1745,7 +1837,19 @@ public class EditorPanel extends JFrame implements ActionListener{
 //						System.out.println("监听！");
 //						System.out.println(System.currentTimeMillis() - startTime);
 						if(EditorPanel.Arrived){
-							if (EditorPanel.RVO == sum%256) {
+							if (EditorPanel.RVO == sum%256) {							
+								
+								try {
+									//播放声音
+									FileInputStream fis = new FileInputStream("music/b"+(2*myFlag+1)+".au");
+									AudioStream stream = new AudioStream(fis);
+									AudioPlayer.player.start(stream);
+								} catch (Exception e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+								
+								
 								final Timer timer = new Timer();
 								final long end = System.currentTimeMillis() + Integer.parseInt(timeMap.get(utils.get(myFlag).getlChannel().getSelect())) * 60 * 1000;
 								timer.schedule(new TimerTask() {
@@ -1899,6 +2003,15 @@ public class EditorPanel extends JFrame implements ActionListener{
 													EditorPanel.RVO = 0;
 													
 													utils.get(myFlag).getlChannel().getClock().changeLabel(timeMap.get(utils.get(myFlag).getlChannel().getSelect()));
+													try {
+														//播放声音
+														FileInputStream fis = new FileInputStream("music/s"+(2*myFlag+1)+".au");
+														AudioStream stream = new AudioStream(fis);
+														AudioPlayer.player.start(stream);
+													} catch (Exception e1) {
+														// TODO Auto-generated catch block
+														e1.printStackTrace();
+													}
 													
 													return;
 												}
@@ -1932,6 +2045,15 @@ public class EditorPanel extends JFrame implements ActionListener{
 											System.out.println("线程结束");
 											
 											utils.get(myFlag).getlChannel().getClock().changeLabel(timeMap.get(utils.get(myFlag).getlChannel().getSelect()));
+											try {
+												//播放声音
+												FileInputStream fis = new FileInputStream("music/s"+(2*myFlag+1)+".au");
+												AudioStream stream = new AudioStream(fis);
+												AudioPlayer.player.start(stream);
+											} catch (Exception e1) {
+												// TODO Auto-generated catch block
+												e1.printStackTrace();
+											}
 											
 											JOptionPane.showMessageDialog(null, "治疗仪未响应，请手动终止！", "警告", JOptionPane.WARNING_MESSAGE);
 											
@@ -2105,6 +2227,16 @@ public class EditorPanel extends JFrame implements ActionListener{
 				while (System.currentTimeMillis() - startTime < 10000) {
 					if(EditorPanel.Arrived){
 						if(EditorPanel.RVO == head[1]%256){
+							try {
+								//播放声音
+								FileInputStream fis = new FileInputStream("music/b"+(2*myFlag+2)+".au");
+								AudioStream stream = new AudioStream(fis);
+								AudioPlayer.player.start(stream);
+							} catch (Exception e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							
 							final Timer timer = new Timer();
 							final long end = System.currentTimeMillis() + utils.get(myFlag).getrChannel().getCustom_time() * 60 * 1000;
 							timer.schedule(new TimerTask() {
@@ -2238,6 +2370,15 @@ public class EditorPanel extends JFrame implements ActionListener{
 												EditorPanel.RVO = 0;
 												
 												utils.get(myFlag).getrChannel().getClock().changeLabel(String.valueOf(utils.get(myFlag).getrChannel().getCustom_time()));
+												try {
+													//播放声音
+													FileInputStream fis = new FileInputStream("music/s"+(2*myFlag+2)+".au");
+													AudioStream stream = new AudioStream(fis);
+													AudioPlayer.player.start(stream);
+												} catch (Exception e1) {
+													// TODO Auto-generated catch block
+													e1.printStackTrace();
+												}
 												
 												return;
 											}
@@ -2267,6 +2408,15 @@ public class EditorPanel extends JFrame implements ActionListener{
 										}
 										
 										utils.get(myFlag).getrChannel().getClock().changeLabel(String.valueOf(utils.get(myFlag).getrChannel().getCustom_time()));
+										try {
+											//播放声音
+											FileInputStream fis = new FileInputStream("music/s"+(2*myFlag+2)+".au");
+											AudioStream stream = new AudioStream(fis);
+											AudioPlayer.player.start(stream);
+										} catch (Exception e1) {
+											// TODO Auto-generated catch block
+											e1.printStackTrace();
+										}
 										
 										JOptionPane.showMessageDialog(null, "治疗仪未响应，请手动终止！", "警告", JOptionPane.WARNING_MESSAGE);
 										
@@ -2337,6 +2487,16 @@ public class EditorPanel extends JFrame implements ActionListener{
 					while (System.currentTimeMillis() - startTime < 10000) {
 						if (EditorPanel.Arrived) {
 							if (EditorPanel.RVO == sum%256) {
+								try {
+									//播放声音
+									FileInputStream fis = new FileInputStream("music/b"+(2*myFlag+2)+".au");
+									AudioStream stream = new AudioStream(fis);
+									AudioPlayer.player.start(stream);
+								} catch (Exception e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+								
 								final Timer timer = new Timer();
 								final long end = System.currentTimeMillis() + Integer.parseInt(timeMap.get(utils.get(myFlag).getrChannel().getSelect())) * 60 * 1000;
 								timer.schedule(new TimerTask() {
@@ -2570,6 +2730,15 @@ public class EditorPanel extends JFrame implements ActionListener{
 													EditorPanel.RVO = 0;
 													
 													utils.get(myFlag).getrChannel().getClock().changeLabel(timeMap.get(utils.get(myFlag).getrChannel().getSelect()));
+													try {
+														//播放声音
+														FileInputStream fis = new FileInputStream("music/s"+(2*myFlag+2)+".au");
+														AudioStream stream = new AudioStream(fis);
+														AudioPlayer.player.start(stream);
+													} catch (Exception e1) {
+														// TODO Auto-generated catch block
+														e1.printStackTrace();
+													}
 													
 													return;
 												}
@@ -2599,6 +2768,15 @@ public class EditorPanel extends JFrame implements ActionListener{
 											}										
 											
 											utils.get(myFlag).getrChannel().getClock().changeLabel(timeMap.get(utils.get(myFlag).getrChannel().getSelect()));
+											try {
+												//播放声音
+												FileInputStream fis = new FileInputStream("music/s"+(2*myFlag+2)+".au");
+												AudioStream stream = new AudioStream(fis);
+												AudioPlayer.player.start(stream);
+											} catch (Exception e1) {
+												// TODO Auto-generated catch block
+												e1.printStackTrace();
+											}
 											
 											JOptionPane.showMessageDialog(null, "治疗仪未响应，请手动终止！", "警告", JOptionPane.WARNING_MESSAGE);
 											
@@ -2646,6 +2824,16 @@ public class EditorPanel extends JFrame implements ActionListener{
 					while (System.currentTimeMillis() - startTime < 10000) {
 						if(EditorPanel.Arrived){
 							if(EditorPanel.RVO == sum%256){
+								try {
+									//播放声音
+									FileInputStream fis = new FileInputStream("music/b"+(2*myFlag+2)+".au");
+									AudioStream stream = new AudioStream(fis);
+									AudioPlayer.player.start(stream);
+								} catch (Exception e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+								
 								final Timer timer = new Timer();
 								final long end = System.currentTimeMillis() + Integer.parseInt(timeMap.get(utils.get(myFlag).getrChannel().getSelect())) * 60 * 1000;
 								timer.schedule(new TimerTask() {
@@ -2777,6 +2965,16 @@ public class EditorPanel extends JFrame implements ActionListener{
 													
 													EditorPanel.Arrived = false;
 													EditorPanel.RVO = 0;
+													try {
+														//播放声音
+														FileInputStream fis = new FileInputStream("music/s"+(2*myFlag+2)+".au");
+														AudioStream stream = new AudioStream(fis);
+														AudioPlayer.player.start(stream);
+													} catch (Exception e1) {
+														// TODO Auto-generated catch block
+														e1.printStackTrace();
+													}
+													
 													return;
 												}
 											}
@@ -2808,6 +3006,15 @@ public class EditorPanel extends JFrame implements ActionListener{
 											}
 											
 											utils.get(myFlag).getrChannel().getClock().changeLabel(timeMap.get(utils.get(myFlag).getrChannel().getSelect()));
+											try {
+												//播放声音
+												FileInputStream fis = new FileInputStream("music/s"+(2*myFlag+2)+".au");
+												AudioStream stream = new AudioStream(fis);
+												AudioPlayer.player.start(stream);
+											} catch (Exception e1) {
+												// TODO Auto-generated catch block
+												e1.printStackTrace();
+											}
 											
 											JOptionPane.showMessageDialog(null, "治疗仪未响应，请手动终止！", "警告", JOptionPane.WARNING_MESSAGE);
 											
