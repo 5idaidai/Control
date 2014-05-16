@@ -76,25 +76,25 @@ public class EditorAboutFrame extends JDialog
 		panel.add(titleLabel, BorderLayout.NORTH);
 
 		// Adds optional subtitle
-		JLabel subtitleLabel = new JLabel(
-				"更多信息请访问  http://nlp.zzu.edu.cn");
-		subtitleLabel.setBorder(BorderFactory.createEmptyBorder(4, 18, 0, 0));
-		subtitleLabel.setOpaque(false);
-		panel.add(subtitleLabel, BorderLayout.CENTER);
-
-		getContentPane().add(panel, BorderLayout.NORTH);
-
+//		JLabel subtitleLabel = new JLabel(
+//				"更多信息请访问  http://nlp.zzu.edu.cn");
+//		subtitleLabel.setBorder(BorderFactory.createEmptyBorder(4, 18, 0, 0));
+//		subtitleLabel.setOpaque(false);
+//		panel.add(subtitleLabel, BorderLayout.CENTER);
+//
+//		getContentPane().add(panel, BorderLayout.NORTH);
+//
 		JPanel content = new JPanel();
 		content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
 		content.setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
-
-		content.add(new JLabel("电脑中频治疗仪控制中心"));
-		content.add(new JLabel("作者：郑大自然语言处理实验室  梁军"));
-		content.add(new JLabel(" "));
-
-		content.add(new JLabel("Copyright (C) 2013 by ZZU Nlp Ltd."));
-		content.add(new JLabel("All rights reserved."));
-		content.add(new JLabel(" "));
+//
+//		content.add(new JLabel("电脑中频治疗仪控制中心"));
+//		content.add(new JLabel("作者：郑大自然语言处理实验室  梁军"));
+//		content.add(new JLabel(" "));
+//
+//		content.add(new JLabel("Copyright (C) 2013 by ZZU Nlp Ltd."));
+//		content.add(new JLabel("All rights reserved."));
+//		content.add(new JLabel(" "));
 
 		try
 		{
