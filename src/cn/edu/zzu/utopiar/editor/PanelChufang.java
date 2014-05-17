@@ -32,7 +32,7 @@ public class PanelChufang extends JFrame implements ActionListener{
 	
 	EditorPanel owner = null;
 	int flag = 0;
-	static String[] du = {"基波","25%","50%","75%"};
+	static String[] du = {"100%","75%","50%","25%"};
 	static JComboBox[] comboBoxs = new JComboBox[9];
 	static JTextField[] textFields = new JTextField[9];
 	static String[] names = new String[]{"无","波形一","波形二","波形三","波形四","波形五","波形六","波形七","波形八","波形九"};
@@ -50,6 +50,7 @@ public class PanelChufang extends JFrame implements ActionListener{
 	JComboBox dwBox = new JComboBox(new String[]{"1","2","3","4","5","6","7","8","9"});
 	JLabel zxPinlv = new JLabel("中心频率:");
 	JComboBox plBox = new JComboBox(new String[]{"2","3","4","5","6","7","8"});
+	JLabel plHz = new JLabel("KHz");
 	JButton begin = new JButton("进入治疗");
 	JButton exit = new JButton("放弃");
 	int[] head;
@@ -144,9 +145,10 @@ public class PanelChufang extends JFrame implements ActionListener{
 		for(int i=0;i<9;i++){
 			final JComboBox com;
 			final JTextField textField;
-			final Layer layer;
+			final Layer layer;			
 			comboBoxs[i] = new JComboBox(du);
 			com = comboBoxs[i];
+			com.setFont(new java.awt.Font("微软雅黑", 0, 12));
 			textFields[i] = new JTextField();
 			textField = textFields[i];
 			layers[i] = new Layer(i);
@@ -180,12 +182,12 @@ public class PanelChufang extends JFrame implements ActionListener{
 						JOptionPane.showMessageDialog(null, "请输入正确的频率(数字)", "警告", JOptionPane.WARNING_MESSAGE);
 						return;
 					}else {
-						if (Integer.parseInt(str)>=1&&Integer.parseInt(str)<=150) {
+						if (Integer.parseInt(str)>=1&&Integer.parseInt(str)<=120) {
 							return;
 						}else {
 							System.out.println("输入值区间错误");
 							textField.setText("");
-							JOptionPane.showMessageDialog(null, "请输入正确的频率(1~150)", "警告", JOptionPane.WARNING_MESSAGE);
+							JOptionPane.showMessageDialog(null, "请输入正确的频率(1~120)", "警告", JOptionPane.WARNING_MESSAGE);
 							return;
 						}
 					}
@@ -226,11 +228,11 @@ public class PanelChufang extends JFrame implements ActionListener{
 			JOptionPane.showMessageDialog(null, "请输入正确的频率(数字)", "警告", JOptionPane.WARNING_MESSAGE);
 			return false;
 		}else {
-			if (Integer.parseInt(str)>=1&&Integer.parseInt(str)<=150) {
+			if (Integer.parseInt(str)>=1&&Integer.parseInt(str)<=120) {
 				return true;
 			}else {
 				System.out.println("输入值区间错误");
-				JOptionPane.showMessageDialog(null, "请输入正确的频率(1~150)", "警告", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(null, "请输入正确的频率(1~120)", "警告", JOptionPane.WARNING_MESSAGE);
 				return false;
 			}
 		}
@@ -333,6 +335,8 @@ public class PanelChufang extends JFrame implements ActionListener{
 		p3.add(zxPinlv);
 		plBox.setBounds(420, 10, 60, 20);
 		p3.add(plBox);
+		plHz.setBounds(490, 10, 60, 20);
+		p3.add(plHz);
 		begin.setBounds(750, 5, 100, 30);
 		p3.add(begin);
 		exit.setBounds(950, 5, 80, 30);
