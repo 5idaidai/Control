@@ -2,7 +2,6 @@ package cn.edu.zzu.utopiar.editor;
 
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -44,6 +43,7 @@ public class PanelCase extends JFrame implements ActionListener{
 	JTextField tf5 = null;
 	JTextField tf6 = null;
 	JTextField tf7 = null;
+	JTextField tf8 = null;
 	
 	JTextArea ta = null;
 
@@ -137,8 +137,11 @@ public class PanelCase extends JFrame implements ActionListener{
 		l8.setBounds(40, 180, 80, 30);
 		panel.add(l8);
 		ta = new JTextArea();
-		ta.setBounds(40, 230, 710, 300);
+		ta.setBounds(42, 232, 706, 296);
+		tf8 = new JTextField();
+		tf8.setBounds(40, 230, 710, 300);
 		panel.add(ta);
+		panel.add(tf8);
 		//----------------------------------
 		
 		b0 = new JButton("≤È’“");
@@ -183,7 +186,7 @@ public class PanelCase extends JFrame implements ActionListener{
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		new PanelCase(null);
+		new PanelCase(null).setVisible(true);
 	}
 
 	class PrintPanel extends JPanel {
