@@ -47,7 +47,7 @@ public class PanelChufang extends JFrame implements ActionListener{
 	JLabel shijian = new JLabel("治疗时间（分钟）:");
 	JComboBox sjBox = new JComboBox(new String[]{"5","10","15","20","25","30"});
 	JLabel dangwei = new JLabel("加热档位:");
-	JComboBox dwBox = new JComboBox(new String[]{"1","2","3","4","5","6","7","8","9"});
+	JComboBox dwBox = new JComboBox(new String[]{"0","1","2","3","4","5","6","7","8","9","10"});
 	JLabel zxPinlv = new JLabel("中心频率:");
 	JComboBox plBox = new JComboBox(new String[]{"2","3","4","5","6","7","8"});
 	JLabel plHz = new JLabel("KHz");
@@ -463,10 +463,10 @@ public class PanelChufang extends JFrame implements ActionListener{
 //			}
 			
 			if (flag == 0) {
-				EditorPanel.s1.setValue(dwBox.getSelectedIndex()+1);
+				EditorPanel.s1.setValue(dwBox.getSelectedIndex());
 				
 			}else {
-				EditorPanel.s3.setValue(dwBox.getSelectedIndex()+1);
+				EditorPanel.s3.setValue(dwBox.getSelectedIndex());
 			}
 			
 			this.setVisible(false);
